@@ -1,6 +1,6 @@
 window.onload = function () {
-    const BASE_URL = "https://developer.github.com/v3/search/#search-users"
-    fetch[BASE_URL +]
+  const SEARCH_URL = "https://api.github.com/search/users?q=";
+
   // Run this once the page has loaded.
   // search
   document
@@ -8,11 +8,16 @@ window.onload = function () {
     .addEventListener("click", searchGithub);
   function searchGithub() {
     const searchUserText = document.querySelector("#searchUser").value;
-
     // Obtain a list of users from the Github API that match searchUserText
-    //  The final result will contain an array under the key 'items'
-    // Pass this array to `renderUserList`
+    fetch(SEARCH_URL + searchUserText)
+      .then((response) => response.json())
+      .then((result) => {
+        let gitHubUser = result.items;
+        renderUserList(gitHubUser);
+      });
   }
+  //  The final result will contain an array under the key 'items'
+  // Pass this array to `renderUserList`
 
   function renderUserList(githubUsers) {
     let html = "";
@@ -20,13 +25,12 @@ window.onload = function () {
     for (let i = 0; i < githubUsers.length; i++) {
       let githubUser = githubUsers[i];
       html += "<li>";
+      html += `<img src=${githubUser.avatar_url} class="user_avatar">`;
       html += `<strong>${githubUser.login}</strong>`;
       html += `<a target="_blank" href="${githubUser.html_url}">`;
       html += "</li>";
     }
     html += "</ul>";
-
     document.querySelector("#resultsContainer").innerHTML = html;
   }
 };
-
