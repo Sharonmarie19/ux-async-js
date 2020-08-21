@@ -26,8 +26,8 @@ window.onload = function () {
       let githubUser = githubUsers[i];
       html += "<li>";
       html += `<img src=${githubUser.avatar_url} class="user_avatar">`;
-      html += `<strong>${githubUser.login}</strong>`;
-      html += `<a target="_blank" href="${githubUser.html_url}">`;
+      html += `<a target="_blank" href="${githubUser.html_url}"><strong>${githubUser.login}</strong></a>`;
+
       html += "</li>";
     }
     html += "</ul>";
